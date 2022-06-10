@@ -34,13 +34,13 @@ Global options:
 -h, --help       Print this usage information.
     --version    Print the current version.
 
-Available commands:
+Available commands.dart:
   create     eb_clean create <output directory>
              Creates a new flutter project.
   generate   eb_clean generate <subcommand>
              Generates features and specific classes
   packages   eb_clean packages <subcommand>
-             runs packages commands
+             runs packages commands.dart
   run        eb_clean run <flavor>
              runs project with  flavor
 
@@ -145,7 +145,7 @@ Available subcommands:
 packages command is used to get pub dependencies and run generators
 
 ```shell
- runs packages commands
+ runs packages commands.dart
 
  Usage: eb_clean packages <subcommand>
   Available subcommands:

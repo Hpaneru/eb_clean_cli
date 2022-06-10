@@ -8,11 +8,11 @@
 import 'package:args/args.dart';
 import 'package:args/command_runner.dart';
 import 'package:eb_clean_cli/src/commands/create/create.dart';
-import 'package:eb_clean_cli/src/commands/run/run_command.dart';
 import 'package:mason/mason.dart' hide packageVersion;
 
 import 'commands/generate/generate.dart';
 import 'commands/packages/packages.dart';
+import 'commands/run/run_command.dart';
 
 //package version
 const packageVersion = '1.0.0';

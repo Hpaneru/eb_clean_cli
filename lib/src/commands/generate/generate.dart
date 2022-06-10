@@ -5,13 +5,7 @@
  *
  */
 import 'package:args/command_runner.dart';
-import 'package:eb_clean_cli/src/commands/generate/subcommands/api_command.dart';
-import 'package:eb_clean_cli/src/commands/generate/subcommands/bloc_command.dart';
-import 'package:eb_clean_cli/src/commands/generate/subcommands/cubit_command.dart';
-import 'package:eb_clean_cli/src/commands/generate/subcommands/feature_command.dart';
-import 'package:eb_clean_cli/src/commands/generate/subcommands/page_command.dart';
-import 'package:eb_clean_cli/src/commands/generate/subcommands/repository_command.dart';
-import 'package:eb_clean_cli/src/commands/generate/subcommands/source_command.dart';
+import 'package:eb_clean_cli/src/commands/generate/subcommands/subcommands.dart';
 import 'package:mason/mason.dart';
 
 class GenerateCommand extends Command<int> {
@@ -21,7 +15,6 @@ class GenerateCommand extends Command<int> {
     addSubcommand(CubitCommand(logger));
     addSubcommand(PageCommand(logger));
     addSubcommand(SourceCommand(logger));
-    addSubcommand(ApiCommand(logger));
     addSubcommand(RepositoryCommand(logger));
   }
 

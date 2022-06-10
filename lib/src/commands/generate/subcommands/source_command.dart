@@ -5,28 +5,22 @@
  */
 import 'package:args/command_runner.dart';
 import 'package:eb_clean_cli/src/cli/cli.dart';
-import '../templates/clean/source/source_template.dart';
 import 'package:mason/mason.dart';
 import 'package:path/path.dart' as p;
 import 'package:recase/recase.dart';
 import 'package:universal_io/io.dart';
 
+import '../templates/graphql/source/source.dart';
+import '../templates/rest/source/source.dart';
+
 class SourceCommand extends Command<int> {
   SourceCommand(this.logger) {
-    argParser
-      ..addOption(
-        'feature',
-        abbr: 'f',
-        help: 'feature name to create page',
-        mandatory: true,
-      )
-      ..addOption(
-        'client',
-        abbr: 'c',
-        help: 'client to use as api client',
-        allowed: ['dio', 'graphql'],
-        defaultsTo: 'graphql',
-      );
+    argParser.addOption(
+      'feature',
+      abbr: 'f',
+      help: 'feature name to create page',
+      mandatory: true,
+    );
   }
 
   final Logger logger;
@@ -38,41 +32,36 @@ class SourceCommand extends Command<int> {
   String get name => 'source';
 
   @override
-  String get invocation => 'eb_clean generate source --client <dio,graphql> <name>';
+  String get invocation => 'eb_clean generate source  <name>';
 
   @override
   String get summary => '$invocation\n$description';
 
   @override
   Future<int> run() async {
-    if (argResults!['feature'] == null) {
-      throw UsageException('feature is required', usage);
-    }
-    final packageName = Directory.current.path.split('/').last;
-    if (!FlutterCli.isVeryGoodProject()) {
-      final args = argResults?.rest;
-      if (args != null && args.isNotEmpty) {
-        final client = argResults!['client'] as String? ?? 'graphql';
-        final featureName = argResults!['feature'] as String;
-        final sourceName = args.first;
-        final sourceTemplate = SourceTemplate();
-        final sourceDone = logger.progress('Generating ${sourceName.pascalCase}RemoteSource');
-        final sourceGenerator = await MasonGenerator.fromBundle(sourceTemplate.bundle);
-        var vars = <String, dynamic>{
-          'name': sourceName,
-          'useDio': client == 'dio',
-          'package_name': packageName,
-        };
-        final cwd = Directory(p.join(Directory.current.path, sourceTemplate.path, '$featureName/data/source'));
-        await sourceGenerator.generate(DirectoryGeneratorTarget(cwd), fileConflictResolution: FileConflictResolution.overwrite, vars: vars);
-        sourceDone('Generated ${sourceName.pascalCase}RemoteSource source in ${cwd.absolute.path}');
-        await sourceTemplate.onGenerateComplete(logger, Directory.current);
-      } else {
-        throw UsageException('please provide source name', usage);
-      }
-      return ExitCode.success.code;
+    if (argResults!['feature'] == null) throw UsageException('feature is required', usage);
+
+    final packageName = FlutterCli.packageName();
+    final projectType = FlutterCli.projectType();
+
+    final args = argResults?.rest;
+    if (args != null && args.isNotEmpty) {
+      final featureName = argResults!['feature'] as String;
+      final sourceName = args.first;
+      final sourceTemplate = projectType == 'rest' ? RestSourceTemplate() : GraphqlSourceTemplate();
+      final sourceDone = logger.progress('Generating ${sourceName.pascalCase}RemoteSource');
+      final sourceGenerator = await MasonGenerator.fromBundle(sourceTemplate.bundle);
+      var vars = <String, dynamic>{
+        'name': sourceName,
+        'package_name': packageName,
+      };
+      final cwd = Directory(p.join(Directory.current.path, sourceTemplate.path, '$featureName/data/source'));
+      await sourceGenerator.generate(DirectoryGeneratorTarget(cwd), fileConflictResolution: FileConflictResolution.overwrite, vars: vars);
+      sourceDone('Generated ${sourceName.pascalCase}RemoteSource source in $featureName feature');
+      await sourceTemplate.onGenerateComplete(logger, Directory.current);
     } else {
-      throw UsageException('source is not generated on non clean project', usage);
+      throw UsageException('please provide source name', usage);
     }
+    return ExitCode.success.code;
   }
 }

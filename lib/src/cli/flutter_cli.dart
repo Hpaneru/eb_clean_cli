@@ -81,12 +81,32 @@ class FlutterCli {
     return pubspecFile.existsSync();
   }
 
-  static bool isVeryGoodProject() {
+  static String packageName() {
+    final currentDirectory = Directory.current;
     if (isFlutterProject()) {
-      final veryGood = File(p.join(Directory.current.absolute.path, 'packages/api', 'pubspec.yaml'));
-      return veryGood.existsSync();
+      final pubspecFile = File(p.join(currentDirectory.absolute.path, 'pubspec.yaml'));
+      final yaml = Pubspec.parse(pubspecFile.readAsStringSync());
+      return yaml.name;
     } else {
-      return false;
+      throw PubspecNotFound();
+    }
+  }
+
+  static String projectType() {
+    final currentDirectory = Directory.current;
+    if (isFlutterProject()) {
+      final cliFile = File(p.join(currentDirectory.absolute.path, '.cli'));
+      if (cliFile.existsSync()) {
+        return cliFile
+            .readAsLinesSync()
+            .where((element) => !element.startsWith('//'))
+            .firstWhere((element) => element.startsWith('project_type:'))
+            .split(' ')
+            .last;
+      }
+      throw FileSystemException();
+    } else {
+      throw PubspecNotFound();
     }
   }
 

@@ -6,12 +6,13 @@
  */
 import 'package:args/args.dart';
 import 'package:args/command_runner.dart';
-import 'package:eb_clean_cli/src/commands/create/templates/clean/clean.dart';
-import 'package:eb_clean_cli/src/commands/create/templates/very_good/very_good.dart';
 import 'package:eb_clean_cli/src/template.dart';
 import 'package:mason/mason.dart';
 import 'package:meta/meta.dart';
 import 'package:universal_io/io.dart';
+
+import 'templates/graphql/graphql.dart';
+import 'templates/rest/rest.dart';
 
 final _defaultDescription = 'A Clean Project created by EB Clean CLI.';
 
@@ -24,7 +25,7 @@ typedef GeneratorBuilder = Future<MasonGenerator> Function(MasonBundle);
 final RegExp _identifierRegExp = RegExp(r'[a-z_][a-z\d_]*');
 final RegExp _orgNameRegExp = RegExp(r'^[a-zA-Z][\w-]*(\.[a-zA-Z][\w-]*)+$');
 
-final _templates = [CleanProjectTemplate(), VeryGoodProjectTemplate()];
+final _templates = [GraphqlTemplate(), RestTemplate()];
 
 final _defaultTemplate = _templates.first;
 
@@ -69,7 +70,7 @@ class CreateCommand extends Command<int> {
   String get name => 'create';
 
   @override
-  String get invocation => 'eb_clean create <output directory>';
+  String get invocation => 'eb_clean create <project name>';
 
   @override
   String get summary => '$invocation\n$description';
@@ -97,7 +98,6 @@ class CreateCommand extends Command<int> {
       logger: logger,
     );
     generateDone('Generated ${files.length} file(s)');
-
     await template.onGenerateComplete(logger, outputDirectory);
     return ExitCode.success.code;
   }

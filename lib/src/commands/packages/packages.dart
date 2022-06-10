@@ -19,7 +19,7 @@ class PackagesCommand extends Command<int> {
   final Logger logger;
 
   @override
-  String get description => 'runs packages commands';
+  String get description => 'runs packages commands.dart';
 
   @override
   String get name => 'packages';

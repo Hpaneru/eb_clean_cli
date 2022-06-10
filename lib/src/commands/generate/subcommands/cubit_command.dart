@@ -4,12 +4,12 @@
  * Company: EB Pearls
  */
 import 'package:args/command_runner.dart';
-import 'package:eb_clean_cli/src/cli/cli.dart';
-import '../templates/cubit/cubit.dart';
 import 'package:mason/mason.dart';
 import 'package:path/path.dart' as p;
 import 'package:recase/recase.dart';
 import 'package:universal_io/io.dart';
+
+import '../templates/shared/cubit/cubit.dart';
 
 class CubitCommand extends Command<int> {
   CubitCommand(this.logger) {
@@ -47,9 +47,6 @@ class CubitCommand extends Command<int> {
       final blocName = args.first;
       final blocTemplate = CubitTemplate();
       String path = '${blocTemplate.path}/$featureName/presentation/blocs/';
-      if (FlutterCli.isVeryGoodProject()) {
-        path = '${blocTemplate.path}/$featureName/cubit/';
-      }
       final blocDone = logger.progress('Generating ${blocName.pascalCase}Cubit class');
       final blocGenerator = await MasonGenerator.fromBundle(blocTemplate.bundle);
       var vars = <String, dynamic>{
