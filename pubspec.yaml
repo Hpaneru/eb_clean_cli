@@ -1,8 +1,7 @@
 name: eb_clean_cli
 description: A sample command-line application.
-version: 1.0.0
-publish_to: 'none'
-# homepage: https://www.example.com
+version: 0.0.1-dev-01
+homepage: https://github.com/kishor98100/eb_clean_cli
 
 environment:
   sdk: '>=2.17.0 <3.0.0'
