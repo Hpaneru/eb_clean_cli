@@ -16,7 +16,7 @@ dependencies:
  pubspec_parse: ^1.2.0
  universal_io: ^2.0.4
  usage: ^4.0.2
- recase: any
+ recase: ^4.0.0
 
 dev_dependencies:
   lints: ^2.0.0
