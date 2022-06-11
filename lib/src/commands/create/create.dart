@@ -97,7 +97,7 @@ class CreateCommand extends Command<int> {
       fileConflictResolution: FileConflictResolution.overwrite,
       logger: logger,
     );
-    generateDone('Generated ${files.length} file(s)');
+    generateDone.complete('Generated ${files.length} file(s)');
     await template.onGenerateComplete(logger, outputDirectory);
     return ExitCode.success.code;
   }

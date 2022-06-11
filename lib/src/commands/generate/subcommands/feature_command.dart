@@ -55,7 +55,7 @@ class FeatureCommand extends Command<int> {
         onVarsChanged: (v) => vars = v,
         workingDirectory: p.join(cwd.path, featureName),
       );
-      featureDone('Generated ${featureName.pascalCase} feature');
+      featureDone.complete('Generated ${featureName.pascalCase} feature');
       await featureTemplate.onGenerateComplete(logger, Directory.current);
     } else {
       throw UsageException('please provide feature name', usage);

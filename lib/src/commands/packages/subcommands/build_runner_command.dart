@@ -37,7 +37,7 @@ class BuildRunnerCommand extends Command<int> {
       final recursive = argResults!['recursive'] == true;
       final pubDone = logger.progress('Running ${lightGreen.wrap('flutter pub run build_runner build --delete-conflicting-outputs')}');
       await FlutterCli.runBuildRunner(cwd: Directory.current.path, recursive: recursive);
-      pubDone();
+      pubDone.complete();
       return ExitCode.success.code;
     } else {
       throw UsageException('packages build_runner only available inside flutter project only', usage);

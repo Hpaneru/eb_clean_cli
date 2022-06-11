@@ -15,7 +15,7 @@ import 'commands/packages/packages.dart';
 import 'commands/run/run_command.dart';
 
 //package version
-const packageVersion = '1.0.0';
+const packageVersion = '0.0.1-dev.1';
 
 //package name
 const packageName = 'eb_clean_cli';

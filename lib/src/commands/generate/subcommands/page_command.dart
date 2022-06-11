@@ -51,7 +51,6 @@ class PageCommand extends Command<int> {
     final args = argResults?.rest;
     if (args != null && args.isNotEmpty) {
       final featureName = argResults!['feature'] as String;
-      String template = 'clean';
       final pageName = args.first;
       final pageTemplate = PageTemplate();
       String path = '${pageTemplate.path}/$featureName/presentation/pages/';
@@ -69,7 +68,7 @@ class PageCommand extends Command<int> {
         onVarsChanged: (v) => vars = v,
         workingDirectory: p.join(Directory.current.path, pageTemplate.path, featureName),
       );
-      pageDone('Generated ${pageName.pascalCase}Page class in $featureName feature');
+      pageDone.complete('Generated ${pageName.pascalCase}Page class in $featureName feature');
     } else {
       throw UsageException('please provide bloc name', usage);
     }

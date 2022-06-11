@@ -57,7 +57,7 @@ class SourceCommand extends Command<int> {
       };
       final cwd = Directory(p.join(Directory.current.path, sourceTemplate.path, '$featureName/data/source'));
       await sourceGenerator.generate(DirectoryGeneratorTarget(cwd), fileConflictResolution: FileConflictResolution.overwrite, vars: vars);
-      sourceDone('Generated ${sourceName.pascalCase}RemoteSource source in $featureName feature');
+      sourceDone.complete('Generated ${sourceName.pascalCase}RemoteSource source in $featureName feature');
       await sourceTemplate.onGenerateComplete(logger, Directory.current);
     } else {
       throw UsageException('please provide source name', usage);

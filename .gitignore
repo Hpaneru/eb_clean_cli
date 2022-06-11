@@ -13,8 +13,7 @@ doc/api/
 .tmp/
 
 # Files generated during tests
-.test_coverage.dart
-coverage/
+.test_coverage.dartcoverage/
 .test_runner.dart
 
 # Android studio and IntelliJ

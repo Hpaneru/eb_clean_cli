@@ -52,7 +52,7 @@ class RepositoryCommand extends Command<int> {
         fileConflictResolution: FileConflictResolution.overwrite,
         vars: vars,
       );
-      repositoryDone('Generated ${repositoryName.pascalCase}Repository class in $featureName feature');
+      repositoryDone.complete('Generated ${repositoryName.pascalCase}Repository class in $featureName feature');
       await repositoryTemplate.onGenerateComplete(logger, Directory.current);
     } else {
       throw UsageException('please provide repository name', usage);
