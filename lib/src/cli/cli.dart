@@ -14,6 +14,7 @@ import 'package:universal_io/io.dart';
 
 part 'dart_cli.dart';
 part 'flutter_cli.dart';
+part 'git_cli.dart';
 
 /// Abstraction for running commands.dart via command-line.
 class _Cmd {
@@ -51,8 +52,7 @@ class _Cmd {
     List<String> args,
   ) {
     if (pr.exitCode != 0) {
-      final values = {'Standard out': pr.stdout.toString().trim(), 'Standard error': pr.stderr.toString().trim()}
-        ..removeWhere((k, v) => v.isEmpty);
+      final values = {'Standard out': pr.stdout.toString().trim(), 'Standard error': pr.stderr.toString().trim()}..removeWhere((k, v) => v.isEmpty);
 
       var message = 'Unknown error';
       if (values.isNotEmpty) {
