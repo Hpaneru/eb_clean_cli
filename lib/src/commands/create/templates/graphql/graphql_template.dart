@@ -26,14 +26,17 @@ class GraphqlTemplate extends Template {
     await FlutterCli.copyEnvs(logger, outputDirectory.path);
     final pubDone = logger.progress('Running flutter pub get in ${outputDirectory.path}');
     await FlutterCli.pubGet(cwd: outputDirectory.path);
-    pubDone();
+    pubDone.complete();
 
     final buildDone = logger.progress('Running ${lightGreen.wrap('flutter pub run build_runner build --delete-conflicting-outputs')}');
     await FlutterCli.runBuildRunner(cwd: outputDirectory.path);
-    buildDone();
+    buildDone.complete();
     final fixDone = logger.progress('Running ${lightGreen.wrap('dart fix --apply')}');
     await DartCli.applyFixes(cwd: outputDirectory.path, recursive: true);
-    fixDone();
+    fixDone.complete();
+    final formatDone = logger.progress('Running ${lightGreen.wrap('dart format .')}');
+    await DartCli.formatCode(cwd: outputDirectory.path, recursive: true);
+    formatDone.complete();
     await FlutterCli.runIntlUtils(logger: logger, cwd: outputDirectory.path);
   }
 }

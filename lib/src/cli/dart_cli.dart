@@ -46,4 +46,32 @@ class DartCli {
 
     await Future.wait<void>(processes);
   }
+
+  /// Format all files (`dart format .`).
+  static Future<void> formatCode({
+    String cwd = '.',
+    bool recursive = false,
+  }) async {
+    if (!recursive) {
+      final pubspec = File(p.join(cwd, 'pubspec.yaml'));
+      if (!pubspec.existsSync()) throw PubspecNotFound();
+
+      await _Cmd.run('dart', ['format', '.'], workingDirectory: cwd);
+      return;
+    }
+
+    final processes = _Cmd.runWhere(
+      run: (entity) => _Cmd.run(
+        'dart',
+        ['format', '.'],
+        workingDirectory: entity.parent.path,
+      ),
+      where: _isPubspec,
+      cwd: cwd,
+    );
+
+    if (processes.isEmpty) throw PubspecNotFound();
+
+    await Future.wait<void>(processes);
+  }
 }

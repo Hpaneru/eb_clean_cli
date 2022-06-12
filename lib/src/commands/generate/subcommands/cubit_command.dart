@@ -55,6 +55,7 @@ class CubitCommand extends Command<int> {
       final cwd = Directory(p.join(Directory.current.path, path));
       await blocGenerator.generate(DirectoryGeneratorTarget(cwd), fileConflictResolution: FileConflictResolution.overwrite, vars: vars);
       blocDone.complete('Generated ${blocName.pascalCase}Cubit class in ${cwd.path}');
+      blocTemplate.onGenerateComplete(logger, Directory.current);
     } else {
       throw UsageException('please provide bloc name', usage);
     }
