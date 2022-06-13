@@ -37,6 +37,6 @@ class RestTemplate extends Template {
     await DartCli.formatCode(cwd: outputDirectory.path, recursive: true);
     formatDone.complete();
     await FlutterCli.runIntlUtils(logger: logger, cwd: outputDirectory.path);
-    await GitCli.runBasicGitInit(logger);
+    await GitCli.runBasicGitInit(logger, cwd: outputDirectory.path);
   }
 }
