@@ -38,6 +38,7 @@ class _Cmd {
     return result;
   }
 
+  /// Runs the specified [cmd] with the provided [args] and returns the stdout in specified condition.
   static Iterable<Future<T>> runWhere<T>({
     required Future<T> Function(FileSystemEntity) run,
     required bool Function(FileSystemEntity) where,
@@ -46,13 +47,17 @@ class _Cmd {
     return Directory(cwd).listSync(recursive: true).where(where).map(run);
   }
 
+  /// Throws an error if the [pr] indicates a failure.
   static void _throwIfProcessFailed(
     ProcessResult pr,
     String process,
     List<String> args,
   ) {
     if (pr.exitCode != 0) {
-      final values = {'Standard out': pr.stdout.toString().trim(), 'Standard error': pr.stderr.toString().trim()}..removeWhere((k, v) => v.isEmpty);
+      final values = {
+        'Standard out': pr.stdout.toString().trim(),
+        'Standard error': pr.stderr.toString().trim()
+      }..removeWhere((k, v) => v.isEmpty);
 
       var message = 'Unknown error';
       if (values.isNotEmpty) {
@@ -77,6 +82,7 @@ const _ignoredDirectories = {
   '.fvm',
 };
 
+/// Checks is directory contains pubspec.yaml file.
 bool _isPubspec(FileSystemEntity entity) {
   final segments = p.split(entity.path).toSet();
   if (segments.intersection(_ignoredDirectories).isNotEmpty) return false;

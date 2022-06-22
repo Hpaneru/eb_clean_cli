@@ -29,8 +29,15 @@ final _templates = [GraphqlTemplate(), RestTemplate()];
 
 final _defaultTemplate = _templates.first;
 
+/// {@template create_command}
+/// `eb_clean create` command creates code from various built-in templates.
+/// {@endtemplate}
 class CreateCommand extends Command<int> {
-  CreateCommand({required this.logger, GeneratorBuilder? generator}) : _generator = generator ?? MasonGenerator.fromBundle {
+  /// {@macro create_command}
+  CreateCommand({
+    required this.logger,
+    GeneratorBuilder? generator,
+  }) : _generator = generator ?? MasonGenerator.fromBundle {
     argParser
       ..addOption(
         'desc',
@@ -114,7 +121,8 @@ class CreateCommand extends Command<int> {
   }
 
   /// Gets the description for the project.
-  String get _description => _argResults['desc'] as String? ?? _defaultDescription;
+  String get _description =>
+      _argResults['desc'] as String? ?? _defaultDescription;
 
   /// Gets the organization name.
   String get _orgName {
@@ -123,6 +131,7 @@ class CreateCommand extends Command<int> {
     return orgName;
   }
 
+  /// templates for creating project
   Template get _template {
     final templateName = _argResults['template'] as String?;
     return _templates.firstWhere(
@@ -131,6 +140,7 @@ class CreateCommand extends Command<int> {
     );
   }
 
+  /// validates org name
   void _validateOrgName(String name) {
     final isValidOrgName = _isValidOrgName(name);
     if (!isValidOrgName) {

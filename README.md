@@ -1,6 +1,6 @@
 # EB Clean CLI
 
-<img src="./doc/assets/logo-ebpearls.svg">
+![Logo](https://raw.githubusercontent.com/kishor98100/eb_clean_cli/main/doc/assets/logo-ebpearls.svg)
 
 #### The complete Command Line Interface for creating clean architecture on flutter inspired by [Very Good CLI](https://pub.dev/packages/very_good_cli)
 
@@ -18,7 +18,7 @@ machine.**
 For first time users, start by installing the [EB Clean CLI](https://github.com/kishor98100/eb_clean_cli)
 
 ```shell
-dart pub global activate -s git https://github.com/kishor98100/eb_clean_cli
+dart pub global activate eb_clean_cli
 ```
 
 After installation, you are good to go
@@ -190,3 +190,4 @@ eb_clean run staging
 eb_clean run production
 
 ```
+

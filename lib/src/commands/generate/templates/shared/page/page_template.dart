@@ -6,11 +6,16 @@
 
 import 'dart:io';
 
-import 'page_bundle.dart';
 import 'package:eb_clean_cli/src/template.dart';
 import 'package:mason_logger/mason_logger.dart';
 
+import 'page_bundle.dart';
+
+/// {@template page_template}
+/// A template for creating a page class.
+/// {@endtemplate}
 class PageTemplate extends Template {
+  /// {@macro page_template}
   PageTemplate()
       : super(
           name: 'page',
@@ -20,5 +25,6 @@ class PageTemplate extends Template {
         );
 
   @override
-  Future<void> onGenerateComplete(Logger logger, Directory outputDirectory, [bool recursive = false]) async {}
+  Future<void> onGenerateComplete(Logger logger, Directory outputDirectory,
+      [bool recursive = false]) async {}
 }

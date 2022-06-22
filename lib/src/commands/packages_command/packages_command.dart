@@ -5,12 +5,16 @@
  *
  */
 import 'package:args/command_runner.dart';
-import 'subcommands/get_command.dart';
 import 'package:mason/mason.dart';
 
 import 'subcommands/build_runner_command.dart';
+import 'subcommands/get_command.dart';
 
+/// {@template packages_command}
+/// The packages command is used to get dependencies and run generators in the project.
+/// {@endtemplate}
 class PackagesCommand extends Command<int> {
+  /// {@macro packages_command}
   PackagesCommand(this.logger) {
     addSubcommand(GetCommand(logger));
     addSubcommand(BuildRunnerCommand(logger));

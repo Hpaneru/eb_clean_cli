@@ -13,7 +13,11 @@ import 'package:mason_logger/mason_logger.dart';
 
 import 'rest_feature_bundle.dart';
 
+/// {@template rest_feature_template}
+/// A template for creating a feature with REST API client.
+/// {@endtemplate}
 class RestFeatureTemplate extends Template {
+  /// {@macro rest_feature_template}
   RestFeatureTemplate()
       : super(
           name: 'rest_feature',
@@ -23,11 +27,14 @@ class RestFeatureTemplate extends Template {
         );
 
   @override
-  Future<void> onGenerateComplete(Logger logger, Directory outputDirectory, [bool recursive = false]) async {
-    final buildDone = logger.progress('Running ${lightGreen.wrap('flutter pub run build_runner build --delete-conflicting-outputs')}');
+  Future<void> onGenerateComplete(Logger logger, Directory outputDirectory,
+      [bool recursive = false]) async {
+    final buildDone = logger.progress(
+        'Running ${lightGreen.wrap('flutter pub run build_runner build --delete-conflicting-outputs')}');
     await FlutterCli.runBuildRunner(cwd: outputDirectory.path);
     buildDone.complete();
-    final formatDone = logger.progress('Running ${lightGreen.wrap('dart format .')}');
+    final formatDone =
+        logger.progress('Running ${lightGreen.wrap('dart format .')}');
     await DartCli.formatCode(cwd: outputDirectory.path, recursive: true);
     formatDone.complete();
   }

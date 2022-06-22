@@ -13,7 +13,11 @@ import 'package:universal_io/io.dart';
 import '../templates/graphql/feature/feature.dart';
 import '../templates/rest/feature/feature.dart';
 
+/// {@macro feature_command}
+/// This command is used to generate a Feature.
+/// {@endtemplate}
 class FeatureCommand extends Command<int> {
+  /// {@macro feature_command}
   FeatureCommand(this.logger);
 
   final Logger logger;
@@ -37,14 +41,19 @@ class FeatureCommand extends Command<int> {
     final args = argResults?.rest;
     if (args != null && args.isNotEmpty) {
       final featureName = args.first;
-      final featureTemplate = projectType == 'rest' ? RestFeatureTemplate() : GraphqlFeatureTemplate();
-      final featureDone = logger.progress('Generating ${featureName.pascalCase} feature');
-      final featureGenerator = await MasonGenerator.fromBundle(featureTemplate.bundle);
+      final featureTemplate = projectType == 'rest'
+          ? RestFeatureTemplate()
+          : GraphqlFeatureTemplate();
+      final featureDone =
+          logger.progress('Generating ${featureName.pascalCase} feature');
+      final featureGenerator =
+          await MasonGenerator.fromBundle(featureTemplate.bundle);
       var vars = <String, dynamic>{
         'name': featureName,
         'package_name': packageName,
       };
-      final cwd = Directory(p.join(Directory.current.path, featureTemplate.path));
+      final cwd =
+          Directory(p.join(Directory.current.path, featureTemplate.path));
       await featureGenerator.generate(
         DirectoryGeneratorTarget(cwd),
         fileConflictResolution: FileConflictResolution.overwrite,

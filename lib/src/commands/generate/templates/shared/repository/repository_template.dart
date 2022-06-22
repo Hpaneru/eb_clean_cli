@@ -13,7 +13,11 @@ import 'package:mason_logger/mason_logger.dart';
 
 import 'repository_bundle.dart';
 
+/// {@template repository_template}
+/// A template for creating a repository class.
+/// {@endtemplate}
 class RepositoryTemplate extends Template {
+  /// {@macro repository_template}
   RepositoryTemplate()
       : super(
           name: 'source',
@@ -23,11 +27,14 @@ class RepositoryTemplate extends Template {
         );
 
   @override
-  Future<void> onGenerateComplete(Logger logger, Directory outputDirectory, [bool recursive = false]) async {
-    final buildDone = logger.progress('Running ${lightGreen.wrap('flutter pub run build_runner build --delete-conflicting-outputs')}');
+  Future<void> onGenerateComplete(Logger logger, Directory outputDirectory,
+      [bool recursive = false]) async {
+    final buildDone = logger.progress(
+        'Running ${lightGreen.wrap('flutter pub run build_runner build --delete-conflicting-outputs')}');
     await FlutterCli.runBuildRunner(cwd: outputDirectory.path);
     buildDone.complete();
-    final formatDone = logger.progress('Running ${lightGreen.wrap('dart format .')}');
+    final formatDone =
+        logger.progress('Running ${lightGreen.wrap('dart format .')}');
     await DartCli.formatCode(cwd: outputDirectory.path, recursive: true);
     formatDone.complete();
   }

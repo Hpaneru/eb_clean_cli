@@ -13,7 +13,11 @@ import 'package:universal_io/io.dart';
 import '../templates/graphql/source/source.dart';
 import '../templates/rest/source/source.dart';
 
+/// {@macro source_command}
+/// This command is used to generate a Source.
+/// {@endtemplate}
 class SourceCommand extends Command<int> {
+  /// {@macro source_command}
   SourceCommand(this.logger) {
     argParser.addOption(
       'feature',
@@ -39,7 +43,9 @@ class SourceCommand extends Command<int> {
 
   @override
   Future<int> run() async {
-    if (argResults!['feature'] == null) throw UsageException('feature is required', usage);
+    if (argResults!['feature'] == null) {
+      throw UsageException('feature is required', usage);
+    }
 
     final packageName = FlutterCli.packageName();
     final projectType = FlutterCli.projectType();
@@ -48,16 +54,23 @@ class SourceCommand extends Command<int> {
     if (args != null && args.isNotEmpty) {
       final featureName = argResults!['feature'] as String;
       final sourceName = args.first;
-      final sourceTemplate = projectType == 'rest' ? RestSourceTemplate() : GraphqlSourceTemplate();
-      final sourceDone = logger.progress('Generating ${sourceName.pascalCase}RemoteSource');
-      final sourceGenerator = await MasonGenerator.fromBundle(sourceTemplate.bundle);
+      final sourceTemplate = projectType == 'rest'
+          ? RestSourceTemplate()
+          : GraphqlSourceTemplate();
+      final sourceDone =
+          logger.progress('Generating ${sourceName.pascalCase}RemoteSource');
+      final sourceGenerator =
+          await MasonGenerator.fromBundle(sourceTemplate.bundle);
       var vars = <String, dynamic>{
         'name': sourceName,
         'package_name': packageName,
       };
-      final cwd = Directory(p.join(Directory.current.path, sourceTemplate.path, '$featureName/data/source'));
-      await sourceGenerator.generate(DirectoryGeneratorTarget(cwd), fileConflictResolution: FileConflictResolution.overwrite, vars: vars);
-      sourceDone.complete('Generated ${sourceName.pascalCase}RemoteSource source in $featureName feature');
+      final cwd = Directory(p.join(Directory.current.path, sourceTemplate.path,
+          '$featureName/data/source'));
+      await sourceGenerator.generate(DirectoryGeneratorTarget(cwd),
+          fileConflictResolution: FileConflictResolution.overwrite, vars: vars);
+      sourceDone.complete(
+          'Generated ${sourceName.pascalCase}RemoteSource source in $featureName feature');
       await sourceTemplate.onGenerateComplete(logger, Directory.current);
     } else {
       throw UsageException('please provide source name', usage);

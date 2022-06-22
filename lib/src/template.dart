@@ -33,5 +33,6 @@ abstract class Template {
   final String path;
 
   /// Callback invoked after template generation has completed.
-  Future<void> onGenerateComplete(Logger logger, Directory outputDirectory, [bool recursive = false]);
+  Future<void> onGenerateComplete(Logger logger, Directory outputDirectory,
+      [bool recursive = false]);
 }

@@ -11,7 +11,11 @@ import 'package:universal_io/io.dart';
 
 import '../templates/shared/bloc/bloc.dart';
 
+/// {@template bloc_command}
+/// This command is used to generate a Bloc.
+/// {@endtemplate}
 class BlocCommand extends Command<int> {
+  /// {@macro bloc_command}
   BlocCommand(this.logger) {
     argParser.addOption(
       'feature',
@@ -30,7 +34,8 @@ class BlocCommand extends Command<int> {
   String get name => 'bloc';
 
   @override
-  String get invocation => 'eb_clean generate bloc --feature <feature-name> <name>';
+  String get invocation =>
+      'eb_clean generate bloc --feature <feature-name> <name>';
 
   @override
   String get summary => '$invocation\n$description';
@@ -46,14 +51,18 @@ class BlocCommand extends Command<int> {
       final blocName = args.first;
       final blocTemplate = BlocTemplate();
       String path = '${blocTemplate.path}/$featureName/presentation/blocs/';
-      final blocDone = logger.progress('Generating ${blocName.pascalCase}Bloc class');
-      final blocGenerator = await MasonGenerator.fromBundle(blocTemplate.bundle);
+      final blocDone =
+          logger.progress('Generating ${blocName.pascalCase}Bloc class');
+      final blocGenerator =
+          await MasonGenerator.fromBundle(blocTemplate.bundle);
       var vars = <String, dynamic>{
         'name': blocName,
       };
       final cwd = Directory(p.join(Directory.current.path, path));
-      await blocGenerator.generate(DirectoryGeneratorTarget(cwd), fileConflictResolution: FileConflictResolution.overwrite, vars: vars);
-      blocDone.complete('Generated ${blocName.pascalCase}Bloc class in ${cwd.path}');
+      await blocGenerator.generate(DirectoryGeneratorTarget(cwd),
+          fileConflictResolution: FileConflictResolution.overwrite, vars: vars);
+      blocDone.complete(
+          'Generated ${blocName.pascalCase}Bloc class in ${cwd.path}');
       await blocTemplate.onGenerateComplete(logger, Directory.current);
     } else {
       throw UsageException('please provide bloc name', usage);

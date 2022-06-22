@@ -8,8 +8,12 @@ import 'package:eb_clean_cli/src/cli/cli.dart';
 import 'package:mason/mason.dart';
 import 'package:universal_io/io.dart';
 
-class BuildRunnerCommand extends Command<int> {
-  BuildRunnerCommand(this.logger) {
+/// {@macro get_command}
+/// The get command is used to get dependencies in the project.
+/// {@endtemplate}
+class GetCommand extends Command<int> {
+  /// {@macro get_command}
+  GetCommand(this.logger) {
     argParser.addFlag(
       'recursive',
       abbr: 'r',
@@ -17,16 +21,17 @@ class BuildRunnerCommand extends Command<int> {
       negatable: false,
     );
   }
+
   final Logger logger;
 
   @override
-  String get description => 'Runs flutter pub run build_runner build --delete-conflicting-outputs in current directory';
+  String get description => 'runs flutter pub get in current directory';
 
   @override
-  String get name => 'build_runner';
+  String get name => 'get';
 
   @override
-  String get invocation => 'eb_clean packages build_runner';
+  String get invocation => 'eb_clean packages get';
 
   @override
   String get summary => '$invocation\n$description';
@@ -35,12 +40,15 @@ class BuildRunnerCommand extends Command<int> {
   Future<int> run() async {
     if (FlutterCli.isFlutterProject()) {
       final recursive = argResults!['recursive'] == true;
-      final pubDone = logger.progress('Running ${lightGreen.wrap('flutter pub run build_runner build --delete-conflicting-outputs')}');
-      await FlutterCli.runBuildRunner(cwd: Directory.current.path, recursive: recursive);
+      final pubDone =
+          logger.progress('Running ${lightGray.wrap('flutter pub get')}');
+      await FlutterCli.pubGet(
+          cwd: Directory.current.path, recursive: recursive);
       pubDone.complete();
       return ExitCode.success.code;
     } else {
-      throw UsageException('packages build_runner only available inside flutter project only', usage);
+      throw UsageException(
+          'packages get only available inside flutter project only', usage);
     }
   }
 }

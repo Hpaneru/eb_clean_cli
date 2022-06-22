@@ -13,7 +13,11 @@ import 'package:mason_logger/mason_logger.dart';
 
 import 'graphql_source_bundle.dart';
 
+/// {@template graphql_source_template}
+/// A template for creating a source with GraphQL API client.
+/// {@endtemplate}
 class GraphqlSourceTemplate extends Template {
+  /// {@macro graphql_source_template}
   GraphqlSourceTemplate()
       : super(
           name: 'graphql_source',
@@ -23,11 +27,14 @@ class GraphqlSourceTemplate extends Template {
         );
 
   @override
-  Future<void> onGenerateComplete(Logger logger, Directory outputDirectory, [bool recursive = false]) async {
-    final buildDone = logger.progress('Running ${lightGreen.wrap('flutter pub run build_runner build --delete-conflicting-outputs')}');
+  Future<void> onGenerateComplete(Logger logger, Directory outputDirectory,
+      [bool recursive = false]) async {
+    final buildDone = logger.progress(
+        'Running ${lightGreen.wrap('flutter pub run build_runner build --delete-conflicting-outputs')}');
     await FlutterCli.runBuildRunner(cwd: outputDirectory.path);
     buildDone.complete();
-    final formatDone = logger.progress('Running ${lightGreen.wrap('dart format .')}');
+    final formatDone =
+        logger.progress('Running ${lightGreen.wrap('dart format .')}');
     await DartCli.formatCode(cwd: outputDirectory.path, recursive: true);
     formatDone.complete();
   }

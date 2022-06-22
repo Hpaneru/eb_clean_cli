@@ -12,7 +12,11 @@ import 'package:mason_logger/mason_logger.dart';
 
 import 'graphql.dart';
 
+/// {@template graphql_template}
+/// A template for creating a project with GraphQL API client.
+/// {@endtemplate}
 class GraphqlTemplate extends Template {
+  /// {@macro graphql_template}
   GraphqlTemplate()
       : super(
           name: 'graphql',
@@ -22,23 +26,27 @@ class GraphqlTemplate extends Template {
         );
 
   @override
-  Future<void> onGenerateComplete(Logger logger, Directory outputDirectory, [bool recursive = false]) async {
+  Future<void> onGenerateComplete(Logger logger, Directory outputDirectory,
+      [bool recursive = false]) async {
     await FlutterCli.copyEnvs(logger, outputDirectory.path);
-    final pubDone = logger.progress('Running flutter pub get in ${outputDirectory.path}');
+    final pubDone =
+        logger.progress('Running flutter pub get in ${outputDirectory.path}');
     await FlutterCli.pubGet(cwd: outputDirectory.path);
     pubDone.complete();
 
-    final buildDone = logger.progress('Running ${lightGreen.wrap('flutter pub run build_runner build --delete-conflicting-outputs')}');
+    final buildDone = logger.progress(
+        'Running ${lightGreen.wrap('flutter pub run build_runner build --delete-conflicting-outputs')}');
     await FlutterCli.runBuildRunner(cwd: outputDirectory.path);
     buildDone.complete();
-    final fixDone = logger.progress('Running ${lightGreen.wrap('dart fix --apply')}');
+    final fixDone =
+        logger.progress('Running ${lightGreen.wrap('dart fix --apply')}');
     await DartCli.applyFixes(cwd: outputDirectory.path, recursive: true);
     fixDone.complete();
-    final formatDone = logger.progress('Running ${lightGreen.wrap('dart format .')}');
+    final formatDone =
+        logger.progress('Running ${lightGreen.wrap('dart format .')}');
     await DartCli.formatCode(cwd: outputDirectory.path, recursive: true);
     formatDone.complete();
     await FlutterCli.runIntlUtils(logger: logger, cwd: outputDirectory.path);
-
     await GitCli.runBasicGitInit(logger, cwd: outputDirectory.path);
   }
 }

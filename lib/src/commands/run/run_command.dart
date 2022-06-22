@@ -9,7 +9,11 @@ import 'package:eb_clean_cli/src/cli/cli.dart';
 import 'package:mason/mason.dart';
 import 'package:universal_io/io.dart';
 
+/// {@macro run_command}
+/// The run command is used to run the project.
+/// {@endtemplate}
 class RunCommand extends Command<int> {
+  /// {@macro run_command}
   RunCommand(this.logger);
 
   final Logger logger;
@@ -34,16 +38,21 @@ class RunCommand extends Command<int> {
     if (FlutterCli.isFlutterProject()) {
       if (argResults!.rest.isNotEmpty) {
         final flavor = argResults!.rest.first;
-        logger.info('Running flutter run -t lib/main-$flavor.dart --flavor $flavor ');
-        await FlutterCli.runProject(cwd: Directory.current.path, flavor: flavor);
+        logger.info(
+            'Running flutter run -t lib/main-$flavor.dart --flavor $flavor ');
+        await FlutterCli.runProject(
+            cwd: Directory.current.path, flavor: flavor);
         return ExitCode.success.code;
       } else {
-        logger.info('Running flutter run -t lib/main-development.dart --flavor development ');
-        await FlutterCli.runProject(cwd: Directory.current.path, flavor: 'development');
+        logger.info(
+            'Running flutter run -t lib/main-development.dart --flavor development ');
+        await FlutterCli.runProject(
+            cwd: Directory.current.path, flavor: 'development');
         return ExitCode.success.code;
       }
     } else {
-      throw UsageException('run command only available inside flutter project only', usage);
+      throw UsageException(
+          'run command only available inside flutter project only', usage);
     }
   }
 }

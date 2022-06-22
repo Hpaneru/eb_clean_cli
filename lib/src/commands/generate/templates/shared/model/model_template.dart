@@ -6,12 +6,16 @@
 import 'dart:io';
 
 import 'package:eb_clean_cli/src/cli/cli.dart';
-
-import 'model_bundle.dart';
 import 'package:eb_clean_cli/src/template.dart';
 import 'package:mason_logger/mason_logger.dart';
 
+import 'model_bundle.dart';
+
+/// {@template model_template}
+/// A template for creating a model class.
+/// {@endtemplate}
 class ModelTemplate extends Template {
+  /// {@macro model_template}
   ModelTemplate()
       : super(
           name: 'model',
@@ -21,11 +25,14 @@ class ModelTemplate extends Template {
         );
 
   @override
-  Future<void> onGenerateComplete(Logger logger, Directory outputDirectory, [bool recursive = false]) async {
-    final buildDone = logger.progress('Running ${lightGreen.wrap('flutter pub run build_runner build --delete-conflicting-outputs')}');
+  Future<void> onGenerateComplete(Logger logger, Directory outputDirectory,
+      [bool recursive = false]) async {
+    final buildDone = logger.progress(
+        'Running ${lightGreen.wrap('flutter pub run build_runner build --delete-conflicting-outputs')}');
     await FlutterCli.runBuildRunner(cwd: outputDirectory.path);
     buildDone.complete();
-    final formatDone = logger.progress('Running ${lightGreen.wrap('dart format .')}');
+    final formatDone =
+        logger.progress('Running ${lightGreen.wrap('dart format .')}');
     await DartCli.formatCode(cwd: outputDirectory.path, recursive: true);
     formatDone.complete();
   }

@@ -8,7 +8,11 @@ import 'package:args/command_runner.dart';
 import 'package:eb_clean_cli/src/commands/generate/subcommands/subcommands.dart';
 import 'package:mason/mason.dart';
 
+/// {@template generate_command}
+/// `eb_clean generate` command.
+/// {@endtemplate}
 class GenerateCommand extends Command<int> {
+  ///{@macro generate_command}
   GenerateCommand({required this.logger}) {
     addSubcommand(FeatureCommand(logger));
     addSubcommand(BlocCommand(logger));
