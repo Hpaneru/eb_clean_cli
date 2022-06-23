@@ -1,3 +1,5 @@
+## 0.0.1-dev.10
+
 ## 0.0.1-dev.9
 
 - env command added to create .env files
@@ -11,7 +13,6 @@
 - API documentation added
 - README updated
 
-
 ## 0.0.1-dev.7
 
 - bug fixes.
@@ -20,26 +21,21 @@
 
 - bug fixes.
 
-
 ## 0.0.1-dev.5
 
 - bug fixes.
-
 
 ## 0.0.1-dev.4
 
 - bug fixes.
 
-
 ## 0.0.1-dev.3
 
 - Import issue on rest template fixed.
 
-
 ## 0.0.1-dev.2
 
 - Bug Fixes.
-
 
 ## 0.0.1-dev.1
 
