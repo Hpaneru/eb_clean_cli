@@ -29,8 +29,7 @@ class EbCleanCommandRunner extends CommandRunner<int> {
   })  : _logger = logger ?? Logger(),
         _updater = updater ?? PubUpdater(),
         super('eb_clean', 'EB Clean Command Line Interface') {
-    argParser.addFlag('version',
-        negatable: false, help: 'Print the current version.');
+    argParser.addFlag('version', negatable: false, help: 'Print the current version.');
     addCommand(CreateCommand(logger: _logger));
     addCommand(GenerateCommand(logger: _logger));
     addCommand(PackagesCommand(_logger));
@@ -82,16 +81,15 @@ class EbCleanCommandRunner extends CommandRunner<int> {
   /// checks latest version
   Future<void> _checkForUpdates() async {
     try {
-      final isUpToDate = await _updater.isUpToDate(
-          packageName: packageName, currentVersion: packageVersion);
+      final isUpToDate = await _updater.isUpToDate(packageName: packageName, currentVersion: packageVersion);
       if (!isUpToDate) {
         _logger
           ..info('')
-          ..info('''
-          ${lightYellow.wrap('Update available!')} ${lightCyan.wrap(packageVersion)} \u2192 ${lightCyan.wrap(await _updater.getLatestVersion(packageName))}
-          ${lightYellow.wrap('Changelog:')} ${lightCyan.wrap('https://github.com/kishor98100/eb_clean_cli/releases/tag/v${await _updater.getLatestVersion(packageName)}')}
-          Run ${lightCyan.wrap('pub global activate eb_clean_cli')} to update.
-        ''');
+          ..info(
+              '${lightYellow.wrap('Update available!')} ${lightCyan.wrap(packageVersion)} \u2192 ${lightCyan.wrap(await _updater.getLatestVersion(packageName))}')
+          ..info(
+              '${lightYellow.wrap('Changelog:')} ${lightCyan.wrap('https://github.com/kishor98100/eb_clean_cli/releases/tag/v${await _updater.getLatestVersion(packageName)}')}')
+          ..info('Run ${lightCyan.wrap('pub global activate eb_clean_cli')} to update.');
       }
     } catch (_) {}
   }
