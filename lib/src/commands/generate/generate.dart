@@ -20,6 +20,7 @@ class GenerateCommand extends Command<int> {
     addSubcommand(PageCommand(logger));
     addSubcommand(SourceCommand(logger));
     addSubcommand(RepositoryCommand(logger));
+    addSubcommand(EnvCommand(logger));
   }
 
   final Logger logger;

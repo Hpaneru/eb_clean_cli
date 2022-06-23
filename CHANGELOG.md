@@ -1,3 +1,11 @@
+## 0.0.1-dev.9
+
+- env command added to create .env files
+- bloc and state flag added to feature command to generate stateful page and bloc class.
+- state flag added to page command to generate stateful page.
+- bug fixes
+- code cleanup
+
 ## 0.0.1-dev.8
 
 - API documentation added

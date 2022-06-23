@@ -6,6 +6,7 @@
  */
 
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:mason_logger/mason_logger.dart';
 import 'package:path/path.dart' as p;
@@ -18,6 +19,23 @@ part 'git_cli.dart';
 
 /// Abstraction for running commands.dart via command-line.
 class _Cmd {
+  static final Logger logger = Logger();
+
+  /// starts the command with the given [cmd] and [args].
+  static Future<int> start(
+    String cmd,
+    List<String> args, {
+    bool throwOnError = true,
+    String? workingDirectory,
+  }) async {
+    final result = await Process.start(cmd, args, workingDirectory: workingDirectory, runInShell: true);
+    await result.stdout.transform(utf8.decoder).map((event) => event.replaceAll('\n', '')).forEach(logger.info);
+    if (throwOnError) {
+      _throwIfProcessFailed(ProcessResult(result.pid, await result.exitCode, result.stdout, result.stderr), cmd, args);
+    }
+    return await result.exitCode;
+  }
+
   /// Runs the specified [cmd] with the provided [args].
   static Future<ProcessResult> run(
     String cmd,
@@ -54,10 +72,8 @@ class _Cmd {
     List<String> args,
   ) {
     if (pr.exitCode != 0) {
-      final values = {
-        'Standard out': pr.stdout.toString().trim(),
-        'Standard error': pr.stderr.toString().trim()
-      }..removeWhere((k, v) => v.isEmpty);
+      final values = {'Standard out': pr.stdout.toString().trim(), 'Standard error': pr.stderr.toString().trim()}
+        ..removeWhere((k, v) => v.isEmpty);
 
       var message = 'Unknown error';
       if (values.isNotEmpty) {

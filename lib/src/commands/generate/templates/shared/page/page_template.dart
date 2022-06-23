@@ -6,6 +6,7 @@
 
 import 'dart:io';
 
+import 'package:eb_clean_cli/src/cli/cli.dart';
 import 'package:eb_clean_cli/src/template.dart';
 import 'package:mason_logger/mason_logger.dart';
 
@@ -25,6 +26,9 @@ class PageTemplate extends Template {
         );
 
   @override
-  Future<void> onGenerateComplete(Logger logger, Directory outputDirectory,
-      [bool recursive = false]) async {}
+  Future<void> onGenerateComplete(Logger logger, Directory outputDirectory, [bool recursive = false]) async {
+    final formatDone = logger.progress('Running ${lightGreen.wrap('dart format .')}');
+    await DartCli.formatCode(cwd: outputDirectory.path, recursive: true);
+    formatDone.complete();
+  }
 }

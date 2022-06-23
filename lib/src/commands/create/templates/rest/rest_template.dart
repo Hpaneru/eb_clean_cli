@@ -26,23 +26,17 @@ class RestTemplate extends Template {
         );
 
   @override
-  Future<void> onGenerateComplete(Logger logger, Directory outputDirectory,
-      [bool recursive = false]) async {
+  Future<void> onGenerateComplete(Logger logger, Directory outputDirectory, [bool recursive = false]) async {
     await FlutterCli.copyEnvs(logger, outputDirectory.path);
-    final pubDone =
-        logger.progress('Running flutter pub get in ${outputDirectory.path}');
+    final pubDone = logger.progress('Running flutter pub get in ${outputDirectory.path}');
     await FlutterCli.pubGet(cwd: outputDirectory.path);
     pubDone.complete();
-    final buildDone = logger.progress(
-        'Running ${lightGreen.wrap('flutter pub run build_runner build --delete-conflicting-outputs')}');
+    logger.info('Running ${lightGreen.wrap('flutter pub run build_runner build --delete-conflicting-outputs')}');
     await FlutterCli.runBuildRunner(cwd: outputDirectory.path);
-    buildDone.complete();
-    final fixDone =
-        logger.progress('Running ${lightGreen.wrap('dart fix --apply')}');
+    final fixDone = logger.progress('Running ${lightGreen.wrap('dart fix --apply')}');
     await DartCli.applyFixes(cwd: outputDirectory.path, recursive: true);
     fixDone.complete();
-    final formatDone =
-        logger.progress('Running ${lightGreen.wrap('dart format .')}');
+    final formatDone = logger.progress('Running ${lightGreen.wrap('dart format .')}');
     await DartCli.formatCode(cwd: outputDirectory.path, recursive: true);
     formatDone.complete();
     await FlutterCli.runIntlUtils(logger: logger, cwd: outputDirectory.path);

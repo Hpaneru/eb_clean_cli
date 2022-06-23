@@ -12,13 +12,27 @@ import 'package:universal_io/io.dart';
 
 import '../templates/graphql/feature/feature.dart';
 import '../templates/rest/feature/feature.dart';
+import '../templates/shared/bloc/bloc.dart';
+import '../templates/shared/cubit/cubit.dart';
 
 /// {@macro feature_command}
 /// This command is used to generate a Feature.
 /// {@endtemplate}
 class FeatureCommand extends Command<int> {
   /// {@macro feature_command}
-  FeatureCommand(this.logger);
+  FeatureCommand(this.logger) {
+    argParser
+      ..addFlag(
+        'state',
+        abbr: 's',
+        help: 'Creates stateful page instead of stateless page.',
+      )
+      ..addFlag(
+        'bloc',
+        abbr: 'b',
+        help: 'Creates bloc classes instead of cubit',
+      );
+  }
 
   final Logger logger;
 
@@ -40,20 +54,19 @@ class FeatureCommand extends Command<int> {
     final projectType = FlutterCli.projectType();
     final args = argResults?.rest;
     if (args != null && args.isNotEmpty) {
+      final isStateful = argResults!['state'] == true;
+      final isBloc = argResults!['bloc'] == true;
       final featureName = args.first;
-      final featureTemplate = projectType == 'rest'
-          ? RestFeatureTemplate()
-          : GraphqlFeatureTemplate();
-      final featureDone =
-          logger.progress('Generating ${featureName.pascalCase} feature');
-      final featureGenerator =
-          await MasonGenerator.fromBundle(featureTemplate.bundle);
+      final blocTemplate = isBloc ? BlocTemplate() : CubitTemplate();
+      final featureTemplate = projectType == 'rest' ? RestFeatureTemplate() : GraphqlFeatureTemplate();
+      final featureDone = logger.progress('Generating ${featureName.pascalCase} feature');
+      final featureGenerator = await MasonGenerator.fromBundle(featureTemplate.bundle);
       var vars = <String, dynamic>{
         'name': featureName,
         'package_name': packageName,
+        'state': isStateful,
       };
-      final cwd =
-          Directory(p.join(Directory.current.path, featureTemplate.path));
+      final cwd = Directory(p.join(Directory.current.path, featureTemplate.path));
       await featureGenerator.generate(
         DirectoryGeneratorTarget(cwd),
         fileConflictResolution: FileConflictResolution.overwrite,
@@ -63,6 +76,15 @@ class FeatureCommand extends Command<int> {
         vars: vars,
         onVarsChanged: (v) => vars = v,
         workingDirectory: p.join(cwd.path, featureName),
+      );
+      final blocGenerator = await MasonGenerator.fromBundle(blocTemplate.bundle);
+      String blocPath = '${blocTemplate.path}/$featureName/presentation/blocs/';
+      await blocGenerator.generate(
+        DirectoryGeneratorTarget(Directory(p.join(Directory.current.path, blocPath))),
+        fileConflictResolution: FileConflictResolution.overwrite,
+        vars: <String, dynamic>{
+          'name': featureName,
+        },
       );
       featureDone.complete('Generated ${featureName.pascalCase} feature');
       await featureTemplate.onGenerateComplete(logger, Directory.current);
