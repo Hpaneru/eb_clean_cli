@@ -25,7 +25,8 @@ class BuildRunnerCommand extends Command<int> {
   final Logger logger;
 
   @override
-  String get description => 'Runs flutter pub run build_runner build --delete-conflicting-outputs in current directory';
+  String get description =>
+      'Runs flutter pub run build_runner build --delete-conflicting-outputs in current directory';
 
   @override
   String get name => 'build_runner';
@@ -40,11 +41,15 @@ class BuildRunnerCommand extends Command<int> {
   Future<int> run() async {
     if (FlutterCli.isFlutterProject()) {
       final recursive = argResults!['recursive'] == true;
-      logger.info('Running ${lightGreen.wrap('flutter pub run build_runner build --delete-conflicting-outputs')}');
-      await FlutterCli.runBuildRunner(cwd: Directory.current.path, recursive: recursive);
+      logger.info(
+          'Running ${lightGreen.wrap('flutter pub run build_runner build --delete-conflicting-outputs')}');
+      await FlutterCli.runBuildRunner(
+          cwd: Directory.current.path, recursive: recursive);
       return ExitCode.success.code;
     } else {
-      throw UsageException('packages build_runner only available inside flutter project only', usage);
+      throw UsageException(
+          'packages build_runner only available inside flutter project only',
+          usage);
     }
   }
 }

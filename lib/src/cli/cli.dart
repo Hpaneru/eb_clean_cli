@@ -28,10 +28,18 @@ class _Cmd {
     bool throwOnError = true,
     String? workingDirectory,
   }) async {
-    final result = await Process.start(cmd, args, workingDirectory: workingDirectory, runInShell: true);
-    await result.stdout.transform(utf8.decoder).map((event) => event.replaceAll('\n', '')).forEach(logger.info);
+    final result = await Process.start(cmd, args,
+        workingDirectory: workingDirectory, runInShell: true);
+    await result.stdout
+        .transform(utf8.decoder)
+        .map((event) => event.replaceAll('\n', ''))
+        .forEach(logger.info);
     if (throwOnError) {
-      _throwIfProcessFailed(ProcessResult(result.pid, await result.exitCode, result.stdout, result.stderr), cmd, args);
+      _throwIfProcessFailed(
+          ProcessResult(
+              result.pid, await result.exitCode, result.stdout, result.stderr),
+          cmd,
+          args);
     }
     return await result.exitCode;
   }
@@ -72,8 +80,10 @@ class _Cmd {
     List<String> args,
   ) {
     if (pr.exitCode != 0) {
-      final values = {'Standard out': pr.stdout.toString().trim(), 'Standard error': pr.stderr.toString().trim()}
-        ..removeWhere((k, v) => v.isEmpty);
+      final values = {
+        'Standard out': pr.stdout.toString().trim(),
+        'Standard error': pr.stderr.toString().trim()
+      }..removeWhere((k, v) => v.isEmpty);
 
       var message = 'Unknown error';
       if (values.isNotEmpty) {

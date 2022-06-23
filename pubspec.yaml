@@ -1,6 +1,6 @@
 name: eb_clean_cli
 description: A Complete CLI app to create and generate project templates inspired by very_good_cli
-version: 0.0.1-dev.10
+version: 0.0.1-dev.11
 homepage: https://github.com/kishor98100/eb_clean_cli
 #publish_to: 'none'
 

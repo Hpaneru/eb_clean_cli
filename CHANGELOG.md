@@ -1,3 +1,6 @@
+## 0.0.1-dev.11
+- run static analysis
+
 ## 0.0.1-dev.10
 
 ## 0.0.1-dev.9
