@@ -1,3 +1,7 @@
+## 0.0.1-dev.12
+- option name error fixed for page generate command.
+
+
 ## 0.0.1-dev.11
 - run static analysis
 
