@@ -1,6 +1,8 @@
 name: Publish Package in Pub.dev
 on:
-  release: [ published ]
+  push:
+    tags:
+      - v1.*
 
 jobs:
   build:
