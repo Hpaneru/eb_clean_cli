@@ -6,14 +6,12 @@ on:
 
 jobs:
   build:
-    runs-on: macos-latest
-    container:
-      image: google/dart:latest
-
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+      - uses: dart-lang/setup-dart@v1.3
       - name: Install dependencies
-        run: pub get
+        run: dart pub get
       - name: Run formatter
         run: dart format .
       - name: Run analyzer
@@ -28,8 +26,8 @@ jobs:
         run: |
           sh ./pub_login.sh
       - name: Check Publish Warnings
-        run: pub publish --dry-run
+        run: dart pub publish --dry-run
       - name: Publish Package
-        run: pub publish -f
+        run: dart pub publish -f
 
 
