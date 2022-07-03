@@ -1,5 +1,3 @@
-## 0.0.1-dev.13.1
-
 
 ## 0.0.1-dev.13
 - added assets and model subcommands to generate command.
