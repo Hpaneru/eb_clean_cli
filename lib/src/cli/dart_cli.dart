@@ -55,7 +55,6 @@ class DartCli {
     if (!recursive) {
       final pubspec = File(p.join(cwd, 'pubspec.yaml'));
       if (!pubspec.existsSync()) throw PubspecNotFound();
-
       await _Cmd.run('dart', ['format', '.'], workingDirectory: cwd);
       return;
     }

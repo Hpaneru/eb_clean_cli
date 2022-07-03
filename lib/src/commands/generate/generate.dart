@@ -5,6 +5,8 @@
  *
  */
 import 'package:args/command_runner.dart';
+import 'package:eb_clean_cli/src/commands/generate/subcommands/assets_command.dart';
+import 'package:eb_clean_cli/src/commands/generate/subcommands/model_command.dart';
 import 'package:eb_clean_cli/src/commands/generate/subcommands/subcommands.dart';
 import 'package:mason/mason.dart';
 
@@ -21,6 +23,8 @@ class GenerateCommand extends Command<int> {
     addSubcommand(SourceCommand(logger));
     addSubcommand(RepositoryCommand(logger));
     addSubcommand(EnvCommand(logger));
+    addSubcommand(ModelCommand(logger));
+    addSubcommand(AssetsCommand(logger));
   }
 
   final Logger logger;

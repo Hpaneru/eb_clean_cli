@@ -171,4 +171,11 @@ class FlutterCli {
         'flutter', ['run', '-t', 'lib/main-$flavor.dart', '--flavor', flavor],
         workingDirectory: cwd);
   }
+
+  static bool isFlutterRoot() {
+    final currentDirectory = Directory.current;
+    final pubspecFile =
+        File(p.join(currentDirectory.absolute.path, 'pubspec.yaml'));
+    return pubspecFile.existsSync();
+  }
 }

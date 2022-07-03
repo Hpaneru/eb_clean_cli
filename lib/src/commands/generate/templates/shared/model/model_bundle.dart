@@ -8,7 +8,7 @@ final modelBundle = MasonBundle.fromJson(<String, dynamic>{
     {
       "path": "{{name.snakeCase()}}_model.dart",
       "data":
-          "LyoKICogQ29weXJpZ2h0IChjKSAyMDIyCiAqIEF1dGhvcjogS2lzaG9yIE1haW5hbGkKICogQ29tcGFueTogRUIgUGVhcmxzCiAqLwoKaW1wb3J0ICdwYWNrYWdlOmZyZWV6ZWRfYW5ub3RhdGlvbi9mcmVlemVkX2Fubm90YXRpb24uZGFydCc7CgpwYXJ0ICd7e25hbWUuc25ha2VDYXNlKCl9fV9tb2RlbC5mcmVlemVkLmRhcnQnOwoKcGFydCAne3tuYW1lLnNuYWtlQ2FzZSgpfX1fbW9kZWwuZy5kYXJ0JzsKCkBmcmVlemVkCmNsYXNzIHt7bmFtZS5wYXNjYWxDYXNlKCl9fU1vZGVsIHdpdGggXyR7e25hbWUucGFzY2FsQ2FzZSgpfX1Nb2RlbCB7CmNvbnN0IHt7bmFtZS5wYXNjYWxDYXNlKCl9fU1vZGVsLl8oKTsKCmNvbnN0IGZhY3Rvcnkge3tuYW1lLnBhc2NhbENhc2UoKX19TW9kZWwoKSA9IF97e25hbWUucGFzY2FsQ2FzZSgpfX1Nb2RlbDsKCmZhY3Rvcnkge3tuYW1lLnBhc2NhbENhc2UoKX19TW9kZWwuZnJvbUpzb24oTWFwPFN0cmluZywgZHluYW1pYz4ganNvbikgPT4gXyR7e25hbWUucGFzY2FsQ2FzZSgpfX1Nb2RlbEZyb21Kc29uKGpzb24pOwoKfQo=",
+          "LyoKICogQ29weXJpZ2h0IChjKSAyMDIyCiAqIEF1dGhvcjogS2lzaG9yIE1haW5hbGkKICogQ29tcGFueTogRUIgUGVhcmxzCiAqLwoKaW1wb3J0ICdwYWNrYWdlOmZyZWV6ZWRfYW5ub3RhdGlvbi9mcmVlemVkX2Fubm90YXRpb24uZGFydCc7CgpwYXJ0ICd7e25hbWUuc25ha2VDYXNlKCl9fV9tb2RlbC5mcmVlemVkLmRhcnQnOwoKcGFydCAne3tuYW1lLnNuYWtlQ2FzZSgpfX1fbW9kZWwuZy5kYXJ0JzsKCkBmcmVlemVkCmNsYXNzIHt7bmFtZS5wYXNjYWxDYXNlKCl9fU1vZGVsIHdpdGggXyR7e25hbWUucGFzY2FsQ2FzZSgpfX1Nb2RlbCB7CmNvbnN0IHt7bmFtZS5wYXNjYWxDYXNlKCl9fU1vZGVsLl8oKTsKY29uc3QgZmFjdG9yeSB7e25hbWUucGFzY2FsQ2FzZSgpfX1Nb2RlbCgKe3sjaGFzUHJvcGVydGllc319IHsge3sjcHJvcGVydGllc319IHJlcXVpcmVkIHt7e3R5cGV9fX0ge3tuYW1lfX0se3svcHJvcGVydGllc319IH0ge3svaGFzUHJvcGVydGllc319CikgPSBfe3tuYW1lLnBhc2NhbENhc2UoKX19TW9kZWw7CmZhY3Rvcnkge3tuYW1lLnBhc2NhbENhc2UoKX19TW9kZWwuZnJvbUpzb24oTWFwPFN0cmluZywgZHluYW1pYz4ganNvbikgPT4gXyR7e25hbWUucGFzY2FsQ2FzZSgpfX1Nb2RlbEZyb21Kc29uKGpzb24pOwp9Cg==",
       "type": "text"
     }
   ],
@@ -34,15 +34,12 @@ final modelBundle = MasonBundle.fromJson(<String, dynamic>{
     "type": "text"
   },
   "vars": {
-    "name": {
-      "type": "string",
-      "description": "Model name",
-      "prompt": "What is your model name?"
-    },
-    "template": {
-      "type": "string",
-      "description": "Template name",
-      "prompt": "What is your template name?"
+    "name": {"type": "string", "description": "Model name"},
+    "properties": {"type": "array", "description": "Model properties"},
+    "hasProperties": {
+      "type": "boolean",
+      "description": "Model has properties",
+      "default": false
     }
   }
 });

@@ -49,7 +49,7 @@ final pageBundle = MasonBundle.fromJson(<String, dynamic>{
   "vars": {
     "name": {
       "type": "string",
-      "description": "Your Page Name",
+      "description": "Your  Name",
       "prompt": "What is your page name?"
     },
     "state": {

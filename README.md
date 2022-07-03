@@ -91,6 +91,8 @@ Usage: eb_clean generate <subcommand>
 -h, --help    Print this usage information.
 
 Available subcommands:
+  assets       eb_clean generate assets
+               generates assets helper class
   bloc         eb_clean generate bloc --feature <feature-name> <name>
                creates bloc class in specific feature
   cubit        eb_clean generate cubit --feature <feature-name> <name>
@@ -99,6 +101,8 @@ Available subcommands:
                creates .envs for all flavors
   feature      eb_clean generate feature  <name> --[no]state --[no]bloc
                generates full feature
+  model        eb_clean generate model <name> --properties <dataType:propertyName,dataType:propertyName1>
+               generates model class
   page         eb_clean generate page --feature <feature-name> --[no]state <name>
                creates page  in specific feature
   repository   eb_clean generate repository <name>
@@ -112,6 +116,10 @@ Run "eb_clean help" to see global options.
 #### Usage
 
 ```shell
+  
+  # generate assets helper class in core module 
+  eb_clean generate assets
+
  # generate feature named login with stateless page and cubit classes
  eb_clean generate feature login  
  
@@ -130,8 +138,14 @@ Run "eb_clean help" to see global options.
  # generate source named LoginRemoteSource's abstract and implementation in login feature
  eb_clean generate source login --feature login
    
-# generate page named LoginPage as stateless widget in login feature
+ # generate page named LoginPage as stateless widget in login feature
  eb_clean generate page login --feature login 
+ 
+ # generate model named LoginModel with properties username and password in login feature
+ eb_clean generate model login --properties String:username,String:password --feature login
+ 
+ # generate model named LoginModel without properties in login feature
+ eb_clean generate model login --feature login
  
  # generate page named LoginPage as stateful widget in login feature
  eb_clean generate page login --feature login --state

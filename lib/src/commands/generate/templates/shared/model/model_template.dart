@@ -21,7 +21,7 @@ class ModelTemplate extends Template {
           name: 'model',
           bundle: modelBundle,
           help: 'generates model',
-          path: 'models/',
+          path: 'lib/src/features',
         );
 
   @override
@@ -30,7 +30,9 @@ class ModelTemplate extends Template {
     logger.info(
         'Running ${lightGreen.wrap('flutter pub run build_runner build --delete-conflicting-outputs')}');
     await FlutterCli.runBuildRunner(cwd: outputDirectory.path);
-
+    logger
+      ..success('Generated files')
+      ..info('\n');
     final formatDone =
         logger.progress('Running ${lightGreen.wrap('dart format .')}');
     await DartCli.formatCode(cwd: outputDirectory.path, recursive: true);
