@@ -53,9 +53,13 @@ class AssetsCommand extends Command<int> {
     final files = <Map<String, dynamic>>[];
     final assets =
         Glob('assets/**/{*.png,*.jpg,*.jpeg,*.svg}', recursive: true);
+
     assets.listSync().forEach((file) {
-      var prefixType = file.path.split('/')[2];
-      prefixType = prefixType.substring(0, prefixType.length - 1);
+      var prefixType = file.path.replaceFirst('./', '').split('/')[1];
+      prefixType = prefixType.endsWith('s')
+          ? prefixType.substring(0, prefixType.length - 1)
+          : prefixType;
+
       files.add({
         'path': file.path.replaceFirst('./', ''),
         'name':

@@ -1,13 +1,18 @@
 
+## 0.0.1-dev.14
+- update project template bundle
+- bug fixes.
+
 ## 0.0.1-dev.13
 - added assets and model subcommands to generate command.
 - bug fixes.
 
 ## 0.0.1-dev.12
+
 - option name error fixed for page generate command.
 
-
 ## 0.0.1-dev.11
+
 - run static analysis
 
 ## 0.0.1-dev.10

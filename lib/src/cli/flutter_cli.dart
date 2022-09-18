@@ -153,13 +153,18 @@ class FlutterCli {
   }
 
   static copyEnvs(Logger logger, String path) async {
+    final isWindows = Platform.isWindows;
+    var cmd = 'cp';
+    if (isWindows) {
+      cmd = 'copy';
+    }
     final envCopy = logger.progress(
         'Generating .env files for development, staging and production');
-    await _Cmd.run('cp', ['.env.example', '.env-production'],
+    await _Cmd.run(cmd, ['.env.example', '.env-production'],
         workingDirectory: path);
-    await _Cmd.run('cp', ['.env.example', '.env-development'],
+    await _Cmd.run(cmd, ['.env.example', '.env-development'],
         workingDirectory: path);
-    await _Cmd.run('cp', ['.env.example', '.env-staging'],
+    await _Cmd.run(cmd, ['.env.example', '.env-staging'],
         workingDirectory: path);
     envCopy.complete(
         'Generated .env files for development, staging and production');

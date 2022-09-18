@@ -32,7 +32,7 @@ class _Cmd {
         workingDirectory: workingDirectory, runInShell: true);
     await result.stdout
         .transform(utf8.decoder)
-        .map((event) => event.replaceAll('\n', ''))
+        .map((event) => event.replaceAll('\n\n\n', '\n'))
         .forEach(logger.info);
     if (throwOnError) {
       _throwIfProcessFailed(
@@ -51,12 +51,15 @@ class _Cmd {
     bool throwOnError = true,
     String? workingDirectory,
   }) async {
+    logger.detail('Running $cmd with $args');
     final result = await Process.run(
       cmd,
       args,
       workingDirectory: workingDirectory,
       runInShell: true,
     );
+
+    logger.detail('Output:\n${result.stdout}');
 
     if (throwOnError) {
       _throwIfProcessFailed(result, cmd, args);
