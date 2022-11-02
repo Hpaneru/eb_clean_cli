@@ -97,8 +97,7 @@ Available subcommands:
                creates bloc class in specific feature
   cubit        eb_clean generate cubit --feature <feature-name> <name>
                creates cubit class in specific feature
-  env          eb_clean generate env
-               creates .envs for all flavors
+
   feature      eb_clean generate feature  <name> --[no]state --[no]bloc
                generates full feature
   model        eb_clean generate model <name> --properties <dataType:propertyName,dataType:propertyName1>
@@ -149,9 +148,7 @@ Run "eb_clean help" to see global options.
  
  # generate page named LoginPage as stateful widget in login feature
  eb_clean generate page login --feature login --state
- 
- # create .envs for all flavors
- eb_clean generate env
+
 
 ```
 

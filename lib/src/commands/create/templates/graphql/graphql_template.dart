@@ -28,7 +28,6 @@ class GraphqlTemplate extends Template {
   @override
   Future<void> onGenerateComplete(Logger logger, Directory outputDirectory,
       [bool recursive = false]) async {
-    await FlutterCli.copyEnvs(logger, outputDirectory.path);
     final pubDone =
         logger.progress('Running flutter pub get in ${outputDirectory.path}');
     await FlutterCli.pubGet(cwd: outputDirectory.path);

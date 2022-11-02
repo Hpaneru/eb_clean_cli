@@ -1,4 +1,8 @@
 
+## 0.0.1-dev.15
+- update graphql project template bundle
+- removed env generate command
+
 ## 0.0.1-dev.14
 - update project template bundle
 - bug fixes.
