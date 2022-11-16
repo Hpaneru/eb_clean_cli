@@ -1,4 +1,7 @@
 
+## 0.0.1-dev.17
+- updated README of project templates
+
 ## 0.0.1-dev.16
 - added fastlane and bitbucket ci/cd
 

@@ -123,7 +123,8 @@ class CreateCommand extends Command<int> {
   }
 
   /// Gets the description for the project.
-  String get _description => _argResults['desc'] as String? ?? _defaultDescription;
+  String get _description =>
+      _argResults['desc'] as String? ?? _defaultDescription;
 
   /// Gets the organization name.
   String get _orgName {
