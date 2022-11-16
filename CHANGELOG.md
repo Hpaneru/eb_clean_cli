@@ -1,4 +1,7 @@
 
+## 0.0.1-dev.16
+- added fastlane and bitbucket ci/cd
+
 ## 0.0.1-dev.15
 - update graphql project template bundle
 - removed env generate command

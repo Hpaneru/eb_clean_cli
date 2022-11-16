@@ -94,13 +94,15 @@ class CreateCommand extends Command<int> {
     final template = _template;
     final generateDone = logger.progress('Bootstrapping');
     final generator = await _generator(template.bundle);
+    var vars = <String, dynamic>{
+      'package_name': _projectName,
+      'app_description': _description,
+      'org_name': _orgName,
+    };
+    await generator.hooks.preGen(vars: vars, onVarsChanged: (v) => vars = v);
     final files = await generator.generate(
       DirectoryGeneratorTarget(outputDirectory),
-      vars: <String, dynamic>{
-        'package_name': _projectName,
-        'app_description': _description,
-        'org_name': _orgName,
-      },
+      vars: vars,
       fileConflictResolution: FileConflictResolution.overwrite,
       logger: logger,
     );
@@ -121,8 +123,7 @@ class CreateCommand extends Command<int> {
   }
 
   /// Gets the description for the project.
-  String get _description =>
-      _argResults['desc'] as String? ?? _defaultDescription;
+  String get _description => _argResults['desc'] as String? ?? _defaultDescription;
 
   /// Gets the organization name.
   String get _orgName {

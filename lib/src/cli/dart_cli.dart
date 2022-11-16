@@ -70,7 +70,6 @@ class DartCli {
     );
 
     if (processes.isEmpty) throw PubspecNotFound();
-
     await Future.wait<void>(processes);
   }
 }
