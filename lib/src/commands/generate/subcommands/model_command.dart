@@ -22,11 +22,9 @@ class ModelCommand extends Command<int> {
       ..addOption(
         'properties',
         abbr: 'p',
-        help:
-            'Properties for model class: properties should be in format of dataType:propertyName separated by comma.',
+        help: 'Properties for model class: properties should be in format of dataType:propertyName separated by comma.',
       )
-      ..addOption('feature',
-          abbr: 'f', help: 'Feature name to create model class');
+      ..addOption('feature', abbr: 'f', help: 'Feature name to create model class');
   }
 
   final Logger logger;
@@ -46,8 +44,7 @@ class ModelCommand extends Command<int> {
   @override
   Future<int> run() async {
     if (argResults!['feature'] == null) {
-      logger.info(
-          '${red.wrap('Feature name is required. please provide feature name with --feature option')}');
+      logger.info('${red.wrap('Feature name is required. please provide feature name with --feature option')}');
       return ExitCode.noInput.code;
     }
 
@@ -66,8 +63,7 @@ class ModelCommand extends Command<int> {
       for (final property in propertiesList) {
         final propertyList = property.split(':');
         if (propertyList.length != 2) {
-          logger.info(
-              '${red.wrap('Invalid property format. Please provide property in format of dataType:propertyName')}');
+          logger.info('${red.wrap('Invalid property format. Please provide property in format of dataType:propertyName')}');
           return ExitCode.noInput.code;
         }
         final dataType = propertyList[0];
@@ -79,8 +75,7 @@ class ModelCommand extends Command<int> {
       }
     }
     final modelTemplate = ModelTemplate();
-    final modelGenerator =
-        await MasonGenerator.fromBundle(modelTemplate.bundle);
+    final modelGenerator = await MasonGenerator.fromBundle(modelTemplate.bundle);
     String path = '${modelTemplate.path}/$featureName/data/models/';
     var vars = <String, dynamic>{
       'name': modelName,
@@ -88,8 +83,7 @@ class ModelCommand extends Command<int> {
       'hasProperties': properties.isNotEmpty,
     };
     final cwd = Directory(p.join(Directory.current.path, path));
-    final modelDone =
-        logger.progress('Generating ${modelName.pascalCase}Model class');
+    final modelDone = logger.progress('Generating ${modelName.pascalCase}Model class');
     await modelGenerator.generate(
       DirectoryGeneratorTarget(cwd),
       vars: vars,

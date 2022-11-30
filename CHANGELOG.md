@@ -1,19 +1,28 @@
+## 0.0.1-dev.18
+
+- bug fixed on feature generation
+- updated templates
 
 ## 0.0.1-dev.17
+
 - updated README of project templates
 
 ## 0.0.1-dev.16
+
 - added fastlane and bitbucket ci/cd
 
 ## 0.0.1-dev.15
+
 - update graphql project template bundle
 - removed env generate command
 
 ## 0.0.1-dev.14
+
 - update project template bundle
 - bug fixes.
 
 ## 0.0.1-dev.13
+
 - added assets and model subcommands to generate command.
 - bug fixes.
 

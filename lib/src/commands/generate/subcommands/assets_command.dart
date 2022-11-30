@@ -41,29 +41,23 @@ class AssetsCommand extends Command<int> {
   Future<int> run() async {
     final isFlutterRoot = FlutterCli.isFlutterRoot();
     if (!isFlutterRoot) {
-      logger.info(
-          '${red.wrap('Please run this command from project root directory.')}');
+      logger.info('${red.wrap('Please run this command from project root directory.')}');
       return ExitCode.noInput.code;
     }
 
     final assetsTemplate = AssetsTemplate();
-    final assetsGenerator =
-        await MasonGenerator.fromBundle(assetsTemplate.bundle);
+    final assetsGenerator = await MasonGenerator.fromBundle(assetsTemplate.bundle);
     final path = Directory(p.join(Directory.current.path, assetsTemplate.path));
     final files = <Map<String, dynamic>>[];
-    final assets =
-        Glob('assets/**/{*.png,*.jpg,*.jpeg,*.svg}', recursive: true);
+    final assets = Glob('assets/**/{*.png,*.jpg,*.jpeg,*.svg}', recursive: true);
 
     assets.listSync().forEach((file) {
       var prefixType = file.path.replaceFirst('./', '').split('/')[1];
-      prefixType = prefixType.endsWith('s')
-          ? prefixType.substring(0, prefixType.length - 1)
-          : prefixType;
+      prefixType = prefixType.endsWith('s') ? prefixType.substring(0, prefixType.length - 1) : prefixType;
 
       files.add({
         'path': file.path.replaceFirst('./', ''),
-        'name':
-            '${p.basenameWithoutExtension(file.path).camelCase}${prefixType.pascalCase}',
+        'name': '${p.basenameWithoutExtension(file.path).camelCase}${prefixType.pascalCase}',
       });
     });
     await assetsGenerator.generate(

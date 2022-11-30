@@ -58,20 +58,15 @@ class FeatureCommand extends Command<int> {
       final isBloc = argResults!['bloc'] == true;
       final featureName = args.first;
       final blocTemplate = isBloc ? BlocTemplate() : CubitTemplate();
-      final featureTemplate = projectType == 'rest'
-          ? RestFeatureTemplate()
-          : GraphqlFeatureTemplate();
-      final featureDone =
-          logger.progress('Generating ${featureName.pascalCase} feature');
-      final featureGenerator =
-          await MasonGenerator.fromBundle(featureTemplate.bundle);
+      final featureTemplate = projectType == 'rest' ? RestFeatureTemplate() : GraphqlFeatureTemplate();
+      final featureDone = logger.progress('Generating ${featureName.pascalCase} feature');
+      final featureGenerator = await MasonGenerator.fromBundle(featureTemplate.bundle);
       var vars = <String, dynamic>{
         'name': featureName,
         'package_name': packageName,
         'state': isStateful,
       };
-      final cwd =
-          Directory(p.join(Directory.current.path, featureTemplate.path));
+      final cwd = Directory(p.join(Directory.current.path, featureTemplate.path));
       await featureGenerator.generate(
         DirectoryGeneratorTarget(cwd),
         fileConflictResolution: FileConflictResolution.overwrite,
@@ -82,12 +77,10 @@ class FeatureCommand extends Command<int> {
         onVarsChanged: (v) => vars = v,
         workingDirectory: p.join(cwd.path, featureName),
       );
-      final blocGenerator =
-          await MasonGenerator.fromBundle(blocTemplate.bundle);
+      final blocGenerator = await MasonGenerator.fromBundle(blocTemplate.bundle);
       String blocPath = '${blocTemplate.path}/$featureName/presentation/blocs/';
       await blocGenerator.generate(
-        DirectoryGeneratorTarget(
-            Directory(p.join(Directory.current.path, blocPath))),
+        DirectoryGeneratorTarget(Directory(p.join(Directory.current.path, blocPath))),
         fileConflictResolution: FileConflictResolution.overwrite,
         vars: <String, dynamic>{
           'name': featureName,

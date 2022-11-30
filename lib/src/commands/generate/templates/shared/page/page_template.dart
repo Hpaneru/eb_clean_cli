@@ -26,10 +26,8 @@ class PageTemplate extends Template {
         );
 
   @override
-  Future<void> onGenerateComplete(Logger logger, Directory outputDirectory,
-      [bool recursive = false]) async {
-    final formatDone =
-        logger.progress('Running ${lightGreen.wrap('dart format .')}');
+  Future<void> onGenerateComplete(Logger logger, Directory outputDirectory, [bool recursive = false]) async {
+    final formatDone = logger.progress('Running ${lightGreen.wrap('dart format .')}');
     await DartCli.formatCode(cwd: outputDirectory.path, recursive: true);
     formatDone.complete();
   }
