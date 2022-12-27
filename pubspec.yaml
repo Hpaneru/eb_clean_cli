@@ -1,6 +1,6 @@
 name: eb_clean_cli
 description: A Complete CLI app to create and generate project templates inspired by very_good_cli
-version: 0.0.1-dev.18
+version: 0.0.1-dev.19
 homepage: https://github.com/kishor98100/eb_clean_cli
 #publish_to: 'none'
 
@@ -8,23 +8,23 @@ environment:
   sdk: '>=2.18.0 <3.0.0'
 
 dependencies:
-  path: ^1.8.2
+  path: ^1.8.3
   args: ^2.3.1
-  glob: ^2.1.0
-  mason: ^0.1.0-dev.35
-  mason_logger: ^0.2.2
+  glob: ^2.1.1
+  mason: ^0.1.0-dev.40
+  mason_logger: ^0.2.3
   meta: ^1.8.0
   pubspec_parse: ^1.2.1
   universal_io: ^2.0.4
   usage: ^4.1.0
-  recase: ^4.1.0
-  pub_updater: ^0.2.2
+ 
+  pub_updater: ^0.2.3
 
 dev_dependencies:
   lints: ^2.0.1
-  test: ^1.22.0
+  test: ^1.22.1
   build_version: ^2.1.1
-  build_runner: ^2.3.2
+  build_runner: ^2.3.3
 executables:
   eb_clean:
 
