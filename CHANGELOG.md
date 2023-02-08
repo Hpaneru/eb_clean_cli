@@ -1,3 +1,8 @@
+## 0.0.1-dev.20
+- removed company logo
+## 0.0.1-dev.19
+- removed recase package
+- updated dependencies
 ## 0.0.1-dev.18
 
 - bug fixed on feature generation

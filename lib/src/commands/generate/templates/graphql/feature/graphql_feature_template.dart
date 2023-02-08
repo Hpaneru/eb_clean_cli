@@ -27,14 +27,18 @@ class GraphqlFeatureTemplate extends Template {
         );
 
   @override
-  Future<void> onGenerateComplete(Logger logger, Directory outputDirectory, [bool recursive = false]) async {
-    final pubGet = logger.progress('Running ${lightGreen.wrap('flutter pub get')}');
+  Future<void> onGenerateComplete(Logger logger, Directory outputDirectory,
+      [bool recursive = false]) async {
+    final pubGet =
+        logger.progress('Running ${lightGreen.wrap('flutter pub get')}');
     await FlutterCli.pubGet(cwd: outputDirectory.path);
     pubGet.complete();
-    logger.info('Running ${lightGreen.wrap('flutter pub run build_runner build --delete-conflicting-outputs')}');
+    logger.info(
+        'Running ${lightGreen.wrap('flutter pub run build_runner build --delete-conflicting-outputs')}');
     await FlutterCli.runBuildRunner(cwd: outputDirectory.path);
 
-    final formatDone = logger.progress('Running ${lightGreen.wrap('dart format .')}');
+    final formatDone =
+        logger.progress('Running ${lightGreen.wrap('dart format .')}');
     await DartCli.formatCode(cwd: outputDirectory.path, recursive: true);
     formatDone.complete();
   }

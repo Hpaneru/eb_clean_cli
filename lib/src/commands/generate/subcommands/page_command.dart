@@ -6,7 +6,6 @@
 import 'package:args/command_runner.dart';
 import 'package:mason/mason.dart';
 import 'package:path/path.dart' as p;
-import 'package:recase/recase.dart';
 import 'package:universal_io/io.dart';
 
 import '../templates/shared/page/page_template.dart';
@@ -39,7 +38,8 @@ class PageCommand extends Command<int> {
   String get name => 'page';
 
   @override
-  String get invocation => 'eb_clean generate page --feature <feature-name> <name>';
+  String get invocation =>
+      'eb_clean generate page --feature <feature-name> <name>';
 
   @override
   String get summary => '$invocation\n$description';
@@ -47,7 +47,8 @@ class PageCommand extends Command<int> {
   @override
   Future<int> run() async {
     if (argResults!['feature'] == null) {
-      logger.detail('${red.wrap('Feature name is required. please provide feature name with --feature option')}');
+      logger.detail(
+          '${red.wrap('Feature name is required. please provide feature name with --feature option')}');
       return ExitCode.noInput.code;
     }
 
@@ -58,21 +59,26 @@ class PageCommand extends Command<int> {
       final pageName = args.first;
       final pageTemplate = PageTemplate();
       String path = '${pageTemplate.path}/$featureName/presentation/pages/';
-      final pageDone = logger.progress('Generating ${pageName.pascalCase}Page class');
-      final pageGenerator = await MasonGenerator.fromBundle(pageTemplate.bundle);
+      final pageDone =
+          logger.progress('Generating ${pageName.pascalCase}Page class');
+      final pageGenerator =
+          await MasonGenerator.fromBundle(pageTemplate.bundle);
       var vars = <String, dynamic>{
         'name': pageName,
         'state': isStateful,
         'feature': featureName,
       };
       final cwd = Directory(p.join(Directory.current.path, path));
-      await pageGenerator.generate(DirectoryGeneratorTarget(cwd), fileConflictResolution: FileConflictResolution.overwrite, vars: vars);
+      await pageGenerator.generate(DirectoryGeneratorTarget(cwd),
+          fileConflictResolution: FileConflictResolution.overwrite, vars: vars);
       await pageGenerator.hooks.postGen(
         vars: vars,
         onVarsChanged: (v) => vars = v,
-        workingDirectory: p.join(Directory.current.path, pageTemplate.path, featureName),
+        workingDirectory:
+            p.join(Directory.current.path, pageTemplate.path, featureName),
       );
-      pageDone.complete('Generated ${pageName.pascalCase}Page class in $featureName feature');
+      pageDone.complete(
+          'Generated ${pageName.pascalCase}Page class in $featureName feature');
       pageTemplate.onGenerateComplete(logger, Directory.current);
     } else {
       throw UsageException('please provide page name', usage);

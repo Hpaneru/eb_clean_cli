@@ -1,6 +1,6 @@
 # EB Clean CLI
 
-![Logo](https://raw.githubusercontent.com/kishor98100/eb_clean_cli/main/doc/assets/logo-ebpearls.svg)
+
 
 #### The complete Command Line Interface for creating clean architecture on flutter inspired by [Very Good CLI](https://pub.dev/packages/very_good_cli)
 
