@@ -1,5 +1,7 @@
+## 0.0.1-dev.21+1
+- updated pipelines
 ## 0.0.1-dev.20
-- removed company logo
+- bugfix
 ## 0.0.1-dev.19
 - removed recase package
 - updated dependencies
